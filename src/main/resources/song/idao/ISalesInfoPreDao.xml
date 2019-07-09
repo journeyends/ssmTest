@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="song.idao.ISalesInfoPreDao">
+    <select id="getList" resultType="song.entity.SalesInfoPre">
+        select * from sales_info_pre limit 0,10
+    </select>
+
+    <insert id="saveSalesInfoPre" parameterType="song.entity.SalesInfoPre">
+        insert into sales_info_pre(project_name,create_date)
+        VALUES (#{project_name},#{create_date})
+        <selectKey keyProperty="pre_id" keyColumn="pre_id" resultType="int" order="AFTER">
+            SELECT last_insert_id();
+        </selectKey>
+    </insert>
+
+    <select id="searchList" parameterType="song.model.SalesInfoPreSearchModel"
+            resultType="song.entity.SalesInfoPre">
+        select * from sales_info_pre WHERE project_name like #{pre.project_name} limit 0,10
+    </select>
+
+    <resultMap id="SalesInfoPreMap" type="song.entity.SalesInfoPre">
+        <id property="PreId" column="pre_id"></id>
+        <result property="ProjectName" column="project_name"></result>
+    </resultMap>
+</mapper>
